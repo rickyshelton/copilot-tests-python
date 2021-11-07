@@ -17,6 +17,7 @@ def main():
     print('A joke: {joke}'.format(joke=get_joke()))
     print('The temperature in Bristol is {temp}'.format(temp=get_bbc_temperature()))
     print('A headline: {headline}'.format(headline=get_bbc_headline()))
+    print('The sorted numbers are {numbers}'.format(numbers=sort_numbers()))
 
 
 # a function that returns the current datetime
@@ -74,6 +75,24 @@ def get_bbc_headline():
     url = 'https://www.bbc.co.uk/news'
     response = requests.get(url)
     return response.text.split('<h3 class="gs-c-promo-heading__title gel-pica-bold nw-o-link-split__text">')[1].split('</h3>')[0]
+
+
+# implement a quick sort of a list of numbers
+def quick_sort(numbers):
+    if len(numbers) <= 1:
+        return numbers
+    else:
+        pivot = numbers[0]
+        less = [i for i in numbers[1:] if i <= pivot]
+        greater = [i for i in numbers[1:] if i > pivot]
+        return quick_sort(less) + [pivot] + quick_sort(greater)
+
+
+# generate a list of 100 random numbers and sort it using quick sort
+def sort_numbers():
+    numbers = [random.randint(1, 500) for i in range(100)]
+    return quick_sort(numbers)
+
 
 if __name__ == "__main__":
     main()
