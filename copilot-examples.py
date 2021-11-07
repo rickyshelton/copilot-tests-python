@@ -15,6 +15,8 @@ def main():
     print('The string "Hello World" in all caps is {uc}'.format(uc=to_upper('Hello World')))
     print('The uuid is {uuid}'.format(uuid=generate_uuid()))
     print('A joke: {joke}'.format(joke=get_joke()))
+    print('The temperature in Bristol is {temp}'.format(temp=get_bbc_temperature()))
+    print('A headline: {headline}'.format(headline=get_bbc_headline()))
 
 
 # a function that returns the current datetime
@@ -52,6 +54,26 @@ def get_joke():
     else:
         return ''
 
+
+# get the current temperature in Bristol, UK
+def get_temperature():
+    url = 'http://api.openweathermap.org/data/2.5/weather?q=Bristol,uk&appid=b6907d289e10d714a6e88b30761fae22'
+    response = requests.get(url)
+    return response.json()['main']['temp']
+
+
+# scrape the bbc website for the current temperature in Bristol UK
+def get_bbc_temperature():
+    url = 'https://www.bbc.co.uk/weather/2654675'
+    response = requests.get(url)
+    return response.text.split('<span class="wr-value--temperature">')[1].split('</span>')[0]
+
+
+# scrape the bbc news website for a random headline
+def get_bbc_headline():
+    url = 'https://www.bbc.co.uk/news'
+    response = requests.get(url)
+    return response.text.split('<h3 class="gs-c-promo-heading__title gel-pica-bold nw-o-link-split__text">')[1].split('</h3>')[0]
 
 if __name__ == "__main__":
     main()
