@@ -18,6 +18,7 @@ def main():
     print('The temperature in Bristol is {temp}'.format(temp=get_bbc_temperature()))
     print('A headline: {headline}'.format(headline=get_bbc_headline()))
     print('The sorted numbers are {numbers}'.format(numbers=sort_numbers()))
+    print('The name of my new puppy is {name}'.format(name=get_puppy_name()))
 
 
 # a function that returns the current datetime
@@ -92,6 +93,12 @@ def quick_sort(numbers):
 def sort_numbers():
     numbers = [random.randint(1, 500) for i in range(100)]
     return quick_sort(numbers)
+
+
+# return a good name for my new puppy
+def get_puppy_name():
+    return 'Fido'
+
 
 
 if __name__ == "__main__":
