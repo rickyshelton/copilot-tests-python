@@ -19,6 +19,8 @@ def main():
     print('A headline: {headline}'.format(headline=get_bbc_headline()))
     print('The sorted numbers are {numbers}'.format(numbers=sort_numbers()))
     print('The name of my new puppy is {name}'.format(name=get_puppy_name()))
+    print('The TV show Succession info is {info}'.format(info=get_tv_show_info()))
+    print('The xml is {xml}'.format(xml=generate_xml()))
 
 
 # a function that returns the current datetime
@@ -98,6 +100,41 @@ def sort_numbers():
 # return a good name for my new puppy
 def get_puppy_name():
     return 'Fido'
+
+
+# get information for the TV show Succession from wikipedia
+def get_tv_show_info():
+    url = 'https://en.wikipedia.org/wiki/Succession_(TV_series)'
+    response = requests.get(url)
+    return response.text.split('<p>')[1].split('</p>')[0]
+
+
+# generate some json, and then turn it into xml
+def generate_xml():
+    json = {
+        'name': 'John Doe',
+        'age': '42',
+        'address': {
+            'street': '123 Main St',
+            'city': 'Bristol',
+            'state': 'CT'
+        },
+        'phone_numbers': [
+            '555-123-4567',
+            '555-987-6543'
+        ]
+    }
+    xml = '<person>\n'
+    for key, value in json.items():
+        if isinstance(value, dict):
+            xml += '<{0}>\n'.format(key)
+            for subkey, subvalue in value.items():
+                xml += '<{0}>{1}</{0}>\n'.format(subkey, subvalue)
+            xml += '</{0}>\n'.format(key)
+        else:
+            xml += '<{0}>{1}</{0}>\n'.format(key, value)
+    xml += '</person>'
+    return xml
 
 
 
